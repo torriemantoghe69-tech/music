@@ -22,9 +22,16 @@ jobs:
         run: npm install
       - name: Build portable app folder
         run: npm run dist:win -- --publish never
+      - name: Remove unused Chromium locales
+        shell: pwsh
+        run: |
+          $localeDir = "dist/win-unpacked/locales"
+          if (Test-Path $localeDir) {
+            Get-ChildItem $localeDir -File -Exclude "zh-CN.pak","en-US.pak","ja.pak" | Remove-Item -Force
+          }
       - name: Create portable ZIP
         shell: pwsh
-        run: Compress-Archive -Path "dist/win-unpacked/*" -DestinationPath "dist/Shengyu-Music-Portable.zip" -Force
+        run: Compress-Archive -Path "dist/win-unpacked/*" -DestinationPath "dist/Shengyu-Music-Portable.zip" -CompressionLevel Optimal -Force
       - name: Publish direct ZIP download
         uses: softprops/action-gh-release@v2
         with:
