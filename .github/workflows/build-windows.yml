@@ -6,7 +6,7 @@ on:
     branches: [main, windows-desktop]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -25,10 +25,13 @@ jobs:
       - name: Create portable ZIP
         shell: pwsh
         run: Compress-Archive -Path "dist/win-unpacked/*" -DestinationPath "dist/Shengyu-Music-Portable.zip" -Force
-      - name: Upload portable ZIP
-        uses: actions/upload-artifact@v4
+      - name: Publish direct ZIP download
+        uses: softprops/action-gh-release@v2
         with:
-          name: Shengyu-Music-Portable-ZIP
-          path: dist/Shengyu-Music-Portable.zip
-          if-no-files-found: error
-          retention-days: 30
+          tag_name: portable-latest
+          name: 声屿音乐播放器（最新版便携包）
+          body: Windows 便携版。下载 Shengyu-Music-Portable.zip，解压后运行 声屿音乐播放器.exe。
+          files: dist/Shengyu-Music-Portable.zip
+          overwrite_files: true
+          prerelease: true
+          make_latest: false
