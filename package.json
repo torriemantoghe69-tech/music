@@ -1,24 +1,36 @@
 {
   "name": "shengyu-music-player",
   "version": "1.0.0",
-  "description": "Shengyu Music Windows desktop player",
+  "description": "Shengyu Music Windows portable desktop player",
   "main": "main.js",
-  "scripts": { "start": "electron .", "dist:win": "electron-builder --win nsis" },
-  "devDependencies": { "electron": "^33.2.1", "electron-builder": "^25.1.8" },
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win --dir"
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
+  },
   "build": {
     "appId": "com.shengyu.music",
     "productName": "声屿音乐播放器",
-    "directories": { "output": "dist" },
-    "files": ["index.html", "main.js", "package.json"],
-    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }] },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "shortcutName": "声屿音乐播放器",
-      "uninstallDisplayName": "声屿音乐播放器",
-      "deleteAppDataOnUninstall": false
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "index.html",
+      "main.js",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
     }
   }
 }
